@@ -1,0 +1,90 @@
+version: '3'
+services:
+  # zookeeper:
+  #   container_name: zookeeper
+  #   image: docker.io/bitnami/zookeeper:3.8
+  #   ports:
+  #     - "2181:2181"
+  #   volumes:
+  #     - "zookeeper_data:/bitnami"
+  #   environment:
+  #     - ALLOW_ANONYMOUS_LOGIN=yes
+  # kafka:
+  #   container_name: kafka
+  #   image: docker.io/bitnami/kafka:3.4
+  #   ports:
+  #     - "9092:9092"
+  #     - "9094:9094"
+  #   volumes:
+  #     - "kafka_data:/bitnami"
+  #   environment:
+  #     - ALLOW_PLAINTEXT_LISTENER=yes
+  #     - KAFKA_ENABLE_KRAFT=no
+  #     - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,EXTERNAL://:9094
+  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
+  #     - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+  #     - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+
+  #   depends_on:
+  #     - zookeeper
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+      - node.name=elasticsearch
+    ports:
+      - 9200:9200
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es-container:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+
+  
+      
+#   humidity_processor:
+#    container_name: humidity_processor
+#    image: humidity_processor_image
+#    environment:
+#      - input_topic=weather-events
+#      - output_topic=humidity-events
+#    depends_on:
+#       - kafka
+
+#   station1:
+#     container_name: station_1
+#     image: weather_station_image
+#     environment:
+#       - topic_name=weather-events
+#       - station_id=1
+#     depends_on:
+#       - kafka
+
+
+#   central_station:
+#     container_name: central_station
+#     image: central_station_image
+#     volumes:
+#       - /home/hadoopuser/Downloads/DataIntensive/parquetStorage:/parquetFiles
+#       - /home/hadoopuser/Downloads/DataIntensive/bitCaskStorage:/bitcaskDisk
+#     environment:
+#      - topic_name=weather-events
+#      - parquet_files_path=/parquetFiles
+#      - bitcask_files_path=/bitcaskDisk
+#     depends_on:
+#     - kafka
+
+
+
+# volumes:
+#   zookeeper_data: 
+#   kafka_data:

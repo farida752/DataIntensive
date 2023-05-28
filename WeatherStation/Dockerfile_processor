@@ -1,0 +1,4 @@
+FROM openjdk:11
+WORKDIR /my_app
+COPY . /my_app
+CMD ["java", "-jar", "out/artifacts/KafkaProcessor_jar/KafkaProducer.jar"]

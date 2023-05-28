@@ -1,0 +1,4 @@
+Elasticsearch
+pandas
+bulk
+os
