@@ -7,4 +7,6 @@
           Key-value store(Bitcask)for the latest reading from each individual station
           ElasticSearch/Kibana that are running over the Parquet files
   Deployed using kubernetes
+  ![Alt Text](./{C200C7CC-3006-42C0-B18D-E42F232F7941}.png.jpg)
+
  
